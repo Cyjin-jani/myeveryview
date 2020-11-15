@@ -4,6 +4,7 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    UPDATE_USER,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -43,6 +44,18 @@ export function logoutUser(){
 
     return {
         type: LOGOUT_USER,
+        payload: request
+    }
+}
+
+
+export function updateUser(dataToSubmit){
+    // console.log('data 액션에 잘 넘어왔니?', dataToSubmit);
+    const request = axios.post(`${USER_SERVER}/update`, dataToSubmit)
+    .then(response => response.data);
+
+    return {
+        type: UPDATE_USER,
         payload: request
     }
 }

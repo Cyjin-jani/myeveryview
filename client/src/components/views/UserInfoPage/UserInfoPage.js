@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import moment from "moment";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { registerUser } from "../../../_actions/user_actions";
+import { updateUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
 import axios from 'axios';
 
@@ -45,6 +45,9 @@ function UserInfoPage(props) {
   if (props.user.userData) {
     userInfo = props.user.userData;
   }
+  const handleCancel = () => {
+    props.history.push("/");
+  }
   return (
 
     <Formik
@@ -81,10 +84,11 @@ function UserInfoPage(props) {
             // lastname: values.lastname,
             image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
           };
+          console.log('dataTOSUBMIT', dataToSubmit);
 
-          dispatch(registerUser(dataToSubmit)).then(response => {
-            if (response.payload.success) {
-              props.history.push("/login");
+          dispatch(updateUser(dataToSubmit)).then(response => {
+            if (response.payload.updateSuccess) {
+              props.history.push("/");
             } else {
               alert(response.payload.err.errmsg)
             }
@@ -129,33 +133,17 @@ function UserInfoPage(props) {
               </Form.Item>
               {/* 이메일 입력란 */}
               <Form.Item required label={<span> 이메일 주소&nbsp;
-                <Tooltip title="이메일은 중복불가이며, 로그인 시 사용됩니다.">
+                <Tooltip title="이메일은 수정이 불가합니다.">
                   <QuestionCircleOutlined />
                 </Tooltip></span>} hasFeedback validateStatus={errors.email && touched.email ? "error" : 'success'}>
                 <Input
                   id="email"
                   placeholder="이메일을 입력해주세요."
                   type="email"
+                  disabled
                   value={values.email}
                   onChange={handleChange}
-                  onBlur={e => {
-                    // call the built-in handleBur
-                    handleBlur(e)
-                    let currentEmail = e.currentTarget.value;
-                    if (currentEmail && currentEmail !== "") {
-                      // DB에서 이메일 중복 체크하기
-                      axios.post('/api/users/checkEmail', {currentEmail})
-                      .then((response) => {
-                        if (response.data.emailCheck) {
-                          alert('사용해도 좋은 이메일 주소 입니다.')
-                        } else {
-                          alert("중복된 이메일입니다. 다른 이메일 주소를 입력해주세요.");
-                          props.values.email = '';
-                          props.handleChange()
-                          
-                        }})
-                    }
-                  }}
+                  onBlur={handleBlur}
                   className={
                     errors.email && touched.email ? 'text-input error' : 'text-input'
                   }
@@ -203,6 +191,9 @@ function UserInfoPage(props) {
               <Form.Item {...tailFormItemLayout}>
                 <Button onClick={handleSubmit} type="primary" disabled={isSubmitting}>
                   수정하기
+                </Button>&nbsp;&nbsp;&nbsp;
+                <Button onClick={handleCancel} type="danger" disabled={isSubmitting}>
+                  뒤로가기
                 </Button>
               </Form.Item>
             </Form>

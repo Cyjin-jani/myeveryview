@@ -38,7 +38,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', function( next ) {
     var user = this;
-    
+    console.log('save하기 직전의 유저정보', user);
     if(user.isModified('password')){    
         console.log('password changed -- 비밀번호 암호화 시작')
         bcrypt.genSalt(saltRounds, function(err, salt){
@@ -46,12 +46,34 @@ userSchema.pre('save', function( next ) {
     
             bcrypt.hash(user.password, salt, function(err, hash){
                 if(err) return next(err);
-                user.password = hash 
+                user.password = hash
                 next()
             })
         })
     } else {
         next()
+    }
+});
+
+userSchema.pre('findOneAndUpdate', function( next ) {
+    var user = this;
+
+    //logout 할 때는 options가 빈 객체
+    if (Object.keys(user.options).length === 0) {
+        next()
+    }
+    //updateUser할 때는 options에 new가 true임.
+    else {    
+        console.log('password changed -- 비밀번호 암호화 시작')
+        bcrypt.genSalt(saltRounds, function(err, salt){
+            if(err) return next(err);
+            // console.log("유저 패스워드", user._update.password);
+            bcrypt.hash(user._update.password, salt, function(err, hash){
+                if(err) return next(err);
+                user._update.password = hash
+                next()
+            })
+        })
     }
 });
 

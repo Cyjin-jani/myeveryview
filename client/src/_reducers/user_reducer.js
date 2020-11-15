@@ -3,6 +3,7 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    UPDATE_USER,
 } from '../_actions/types';
  
 
@@ -16,6 +17,9 @@ export default function(state={},action){
             return {...state, userData: action.payload }
         case LOGOUT_USER:
             return {...state }
+        case UPDATE_USER:
+            return {...state, userSuccess: action.payload} //임시
+            
         default:
             return state;
     }

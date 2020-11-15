@@ -85,4 +85,19 @@ router.post("/checkEmail", (req, res) => {
     })
 });
 
+router.post("/update", (req, res) => {
+    console.log('유저 업뎃 요청받음');
+    const user = new User(req.body);
+    // console.log(req.body);
+    //이름은 update하고, password는 암호화 해야해서 save로 해봄.
+    User.findOneAndUpdate({ email: req.body.email }, { name: req.body.name, password: user.password}, {new: true},(err, doc) => {
+        if (err) return res.json({ updateSuccess: false, err });
+        return res.status(200).send({
+            updateSuccess: true,
+            doc: doc
+        });
+    });
+
+});
+
 module.exports = router;
