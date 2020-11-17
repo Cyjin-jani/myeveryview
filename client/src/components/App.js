@@ -6,6 +6,8 @@ import LandingPage from "./views/LandingPage/LandingPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import UserInfoPage from "./views/UserInfoPage/UserInfoPage.js";
+import ResetPage from './views/ResetPage/ResetPage.js';
+import UploadProductPage from './views/UploadProductPage/UploadProductPage.js';
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 
@@ -21,8 +23,10 @@ function App() {
         <Switch>
           <Route exact path="/" component={Auth(LandingPage, null)} />
           <Route exact path="/login" component={Auth(LoginPage, false)} />
+          <Route exact path="/reset_user" component={Auth(ResetPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/userInfo" component={Auth(UserInfoPage, true)} />
+          <Route exact path="/product/upload" component={Auth(UploadProductPage, true)} />
         </Switch>
       </div>
       <Footer />

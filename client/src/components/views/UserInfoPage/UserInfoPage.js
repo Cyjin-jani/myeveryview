@@ -4,7 +4,6 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { updateUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
-import axios from 'axios';
 
 import {
   Form,
@@ -47,6 +46,9 @@ function UserInfoPage(props) {
   }
   const handleCancel = () => {
     props.history.push("/");
+  }
+  const handleResign = () => {
+    alert('ㄹㅇ탈퇴하시겠습니까?')
   }
   return (
 
@@ -195,7 +197,13 @@ function UserInfoPage(props) {
                 <Button onClick={handleCancel} type="danger" disabled={isSubmitting}>
                   뒤로가기
                 </Button>
+                <Button onClick={handleResign} type="info" disabled={isSubmitting}>
+                  탈퇴하기
+                </Button>
               </Form.Item>
+              {/* 회원탈퇴 버튼 */}
+              {/* <Form.Item {...tailFormItemLayout}>
+              </Form.Item> */}
             </Form>
           </div>
         );
