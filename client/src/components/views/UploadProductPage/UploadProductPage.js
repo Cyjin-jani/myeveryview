@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import { Form, Button, Typography, Input } from 'antd';
+import { Form, Button, Typography, Input, DatePicker, Radio } from 'antd';
 import FileUpload from '../../utils/FileUpload';
+import StarRatings from 'react-star-ratings';
 import axios from 'axios';
 
 const { Title } = Typography;
@@ -16,13 +17,26 @@ const Categories = [
     {key: 8, value: "게임"},
     {key: 9, value: "SW 프로그램(어플)"},
 ]
+const config = {
+    rules: [
+      {
+        type: 'object',
+        required: true,
+        message: '날짜를 입력해주세요!',
+      },
+    ],
+  };
 
-// 실수함(컴포넌트는 대문자로 시작해야 한다.
+// 실수함(컴포넌트는 대문자로 시작해야 한다.)
 function UploadProductPage() {
     const [productName, setProductName] = useState("");
     const [myReview, setMyReview] = useState("");
     const [price, setPrice] = useState(0);
     const [Category, setCategory] = useState(1);
+    const [Images, setImages] = useState([]);
+    const [Stars, setStars] = useState(0);
+    const [usedDate, setUsedDate] = useState("");
+    const [reBuy, setReBuy] = useState(0);
 
 
     const nameChangeHandler = (e) => {
@@ -41,6 +55,27 @@ function UploadProductPage() {
         setCategory(e.currentTarget.value)
     }
 
+    const updateImages = (newImages) => {
+        setImages(newImages);
+        // console.log('이미지정보 전달됨', newImages);
+    }
+
+    const starChangeHandler = (newRating, name) => {
+        setStars(newRating);
+    }
+
+    const dateChangeHandler = (date, dateString) => {
+        setUsedDate(dateString);
+    }
+
+    const reBuyHandler = (e) => {
+        setReBuy(e.target.value)
+    }
+
+    const submitHandler = () => {
+
+    }
+
     return (
         <div style={{ maxWidth: '700px', margin: '2rem auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -49,7 +84,7 @@ function UploadProductPage() {
 
             <Form>
                 {/* DropZone */}
-                <FileUpload />
+                <FileUpload refreshFunction={updateImages} />
                 <br />
                 <br />
                 <label>제품명</label>
@@ -64,6 +99,12 @@ function UploadProductPage() {
                 <Input type="number" onChange={priceChangeHandler} value={price} />
                 <br />
                 <br />
+                <label>구매(사용) 날짜</label>
+                <Form.Item name="date-picker" {...config}>
+                    <DatePicker required onChange={dateChangeHandler} 
+                    disabledDate={d => !d || d.isAfter(Date.now())} />
+                </Form.Item>
+                <label>카테고리 설정</label><br />
                 <select onChange={categoryChangeHandler} value={Category}>
                     {Categories.map(item => (
                         <option key={item.key} value={item.key}>{item.value}</option>
@@ -71,8 +112,28 @@ function UploadProductPage() {
                 </select>
                 <br />
                 <br />
-                <Button type="submit">
-                확인
+                <label>재구매(재사용)의사</label><br />
+                <Radio.Group onChange={reBuyHandler} value={reBuy}>
+                    <Radio value={1}>예, 또 구매(사용)할래요.</Radio>
+                    <Radio value={2}>아니요, 다시는 안써요.</Radio>
+                </Radio.Group>
+                <br />
+                <br />
+                <label>종합 평가</label><br />
+                <StarRatings
+                    rating={Stars}
+                    starRatedColor="#fcdb03"
+                    starHoverColor="#fcb103"
+                    changeRating={starChangeHandler}
+                    numberOfStars={5}
+                    name='rating'
+                    starDimension="25px"
+                    starSpacing="7px"
+                />
+                <br />
+                <br />
+                <Button type="primary" onSubmit={submitHandler}>
+                리뷰 업로드
                 </Button>
             </Form>
         </div>

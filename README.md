@@ -1,18 +1,11 @@
-Hello, My Friends  
-Thank you for having interest in this repository ! 
+# 마이에브리뷰 프로젝트
 
-To use this application, 
+## 프로젝트 설명
+---
 
-1. make dev.js file inside config folder 
-2. put mongoDB info into dev.js file 
-3. Type  " npm install " inside the root directory  ( Download Server Dependencies ) 
-4. Type " npm install " inside the client directory ( Download Front-end Dependencies )
-
-
-If you have problem, feel free to ask me ^^ 
-
-You can watch the tutorial for this app.
-
-https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber
-
+&nbsp; 아주 사소한 것부터 매우 중요한 것까지 무엇이든 리뷰&메모가 가능한 어플리케이션입니다.  
+&nbsp; 영화는 영화 어플에, 맛집은 맛집 어플에, 뷰티는 뷰티관련 어플 등 여러가지 어플리케이션에 저장하던 리뷰들을, 이제는 하나의 어플에서 편하게 본인의 취향 및 리뷰를 파악할 수 있습니다.  
+&nbsp; 거기에, 어플로 존재하지 않는 아주 소소한 것들에 대해서도 리뷰가 얼마든지 가능합니다.  
+우연히 사본 집 앞 분식떡볶이나 붕어빵, 길가다 목이 말라서 편의점에서 아무거나 집은 음료, 야근할때 먹던 과자, 광고에 낚여서 사본 화장품, 선물받은 제품 등
+별로였던 상품이 기억이 나지 않아 다시 구매하는 등의 같은 실수를 반복하지 않을 수 있고, 자신의 취향도 파악이 가능한 라이프-로그 스타일의 어플리케이션입니다.
 
