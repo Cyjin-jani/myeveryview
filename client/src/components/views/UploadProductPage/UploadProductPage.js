@@ -28,7 +28,7 @@ const config = {
   };
 
 // 실수함(컴포넌트는 대문자로 시작해야 한다.)
-function UploadProductPage() {
+function UploadProductPage(props) {
     const [productName, setProductName] = useState("");
     const [myReview, setMyReview] = useState("");
     const [price, setPrice] = useState(0);
@@ -72,7 +72,37 @@ function UploadProductPage() {
         setReBuy(e.target.value)
     }
 
-    const submitHandler = () => {
+    const submitHandler = (e) => {
+        e.preventDefault();
+        if (!productName || !myReview || !price || !Category || !Images || !Stars || !usedDate || !reBuy) {
+            return alert('모든 항목을 넣어주셔야 합니다.')
+        }
+
+        //서버에 채운 값들을 request로 보낸다.
+
+        const body = {
+            writer: props.user.userData._id,
+            title: productName,
+            reviewDescription: myReview,
+            price: price,
+            images: Images,
+            usedDate: usedDate,
+            category: Category,
+            stars: Stars,
+            rebuy: reBuy,
+        }
+
+        axios.post('/api/product', body)
+            .then(response => {
+                if(response.data.success) {
+                    alert('업로드 성공!')
+                    props.history.push('/')
+                }else {
+                    alert('업로드 실패 ㅠㅜ')
+                }
+            })
+
+
 
     }
 
@@ -82,7 +112,7 @@ function UploadProductPage() {
                 <Title level={2}> 제품 리뷰하기 </Title>
             </div>
 
-            <Form>
+            <Form onSubmit={submitHandler}>
                 {/* DropZone */}
                 <FileUpload refreshFunction={updateImages} />
                 <br />
@@ -132,7 +162,7 @@ function UploadProductPage() {
                 />
                 <br />
                 <br />
-                <Button type="primary" onSubmit={submitHandler}>
+                <Button type="primary" onClick={submitHandler}>
                 리뷰 업로드
                 </Button>
             </Form>
