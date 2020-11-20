@@ -43,6 +43,19 @@ router.post('/', (req, res) => {
 
 })
 
+//전체 리뷰 가져오기
+router.post('/allProducts', (req, res) => {
+  
+  //product collection안에 들어있는 모든 상품 정보 불러오기.
+  Product.find()
+    .populate('writer') //writer에 대한 모든 정보 가져옴.
+    .exec((err, productsInfo) => {
+      if (err) return res.status(400).json({success: false, err})
+      return res.status(200).json({success: true, productsInfo})
+    })
+
+})
+
 
 
 module.exports = router;

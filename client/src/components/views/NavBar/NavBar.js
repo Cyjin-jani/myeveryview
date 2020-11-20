@@ -5,6 +5,7 @@ import { Drawer, Button, Icon } from 'antd';
 import './Sections/Navbar.css';
 
 function NavBar() {
+  console.log('reRendering');
   const [visible, setVisible] = useState(false)
 
   const showDrawer = () => {
