@@ -38,9 +38,9 @@ const productSchema = mongoose.Schema({
         default: Date.now
     },
     //카테고리
-    category: {
+    categories: {
         type: Number,
-
+        default: 1
     },
     //별점
     stars: {

@@ -5,6 +5,8 @@ import { Icon, Col, Card, Row, Button } from 'antd';
 import ImageSlider from '../../utils/ImageSlider';
 import Meta from 'antd/lib/card/Meta';
 import StarRatings from 'react-star-ratings';
+import Checkbox from './Sections/CheckBox';
+import { categories } from './Sections/Datas';
 
 function LandingPage() {
 
@@ -12,6 +14,10 @@ function LandingPage() {
     const [Skip, setSkip] = useState(0);
     const [Limit, setLimit] = useState(4);
     const [PostSize, setPostSize] = useState(0);
+    const [Filters, setFilters] = useState({
+        categories: [],
+        price: []
+    });
 
     useEffect(() => {
 
@@ -31,6 +37,7 @@ function LandingPage() {
                 if (response.data.success) {
                     // console.log(response.data);
                     if (body.loadMore) {
+                        console.log('더보기버튼 누름');
                         setProducts([...Products, ...response.data.productsInfo])
                     } else {
                         setProducts(response.data.productsInfo)
@@ -60,14 +67,14 @@ function LandingPage() {
     const renderCards = Products.map((product, index) => {
         // console.log(product);
 
-        return <Col lg={6} md={8} xs={24} key={index}>
+        return <Col lg={6} md={8} xs={24} key={index} >
             <Card
                 cover={<ImageSlider images={product.images} />}
                 bodyStyle={{paddingBottom: '5px'}}
             >
                 <Meta
                     title={product.title}
-                    description={[<div>
+                    description={[<div key={index}>
                         <StarRatings
                         rating={product.stars}
                         starRatedColor="#fcdb03"
@@ -84,6 +91,29 @@ function LandingPage() {
         </Col>
     })
 
+    const showFilteredResults = (filters) => {
+        let body = {
+            skip: 0, //checkbox 누를때마다 처음부터 다시 시작해서 가져와야 하므로 0
+            limit: Limit,
+            filters: filters
+        }
+        console.log("filters의 body", body, filters);
+        getProducts(body)
+        setSkip(0)
+
+    }
+
+    const handleFilters = (filters, filterCategory) => {
+        
+        const newFilters = {...Filters }
+        //자식 컴포넌트 (checkbox)에서 가져온 걸 넣어준다.
+        newFilters[filterCategory] = filters;
+
+        showFilteredResults(newFilters)
+
+
+    }   
+
     
 
     return (
@@ -94,16 +124,19 @@ function LandingPage() {
 
             {/* 검색 필터 넣을 곳 */}
             
+            {/* 카테고리 체크박스 */}
+            <Checkbox list={categories} handleFilters={filters => handleFilters(filters, "categories")} />
+
             {/* 검색 */}
 
             {/* cards */}
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16, 16]} type="flex" justify="start">
                 {renderCards}
 
             </Row>
 
-            {PostSize >= Limit && 
-                <div style={{justifyContent: 'center', textAlign: 'center', marginTop: '1.5rem'}}>
+            {PostSize > Limit && 
+                <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
                     <Button onClick={loadMoreHandler}>더보기</Button>
                 </div>
             }

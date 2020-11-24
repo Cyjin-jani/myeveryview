@@ -53,13 +53,27 @@ router.post('/allProducts', (req, res) => {
   //만약 스킵이 없다면 처음부터 데이터를 보여줘야 함. (만약 이미 데이터가 있다면, 그 다음 게시물부터 보여줘야함)
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
 
+  let findArgs = {};
+  for(let key in req.body.filters) {
+    
+    if(req.body.filters[key].length > 0){
+      findArgs[key] = req.body.filters[key];
+    }
 
-  Product.find()
+  }
+  // 어떤 카테고리만 가져올 지를 find에다가 findArgs로 넣어줌.
+  // console.log('findArgs', findArgs);
+
+  Product.find(findArgs)
     .populate('writer') //writer에 대한 모든 정보 가져옴.
     .skip(skip)
     .limit(limit)
     .exec((err, productsInfo) => {
       if (err) return res.status(400).json({success: false, err})
+      console.log('db값');
+      for(let i in productsInfo){
+        console.log("리뷰들", productsInfo[i].title);
+      }
       return res.status(200).json({success: true, productsInfo, postSize: productsInfo.length})
     })
 
