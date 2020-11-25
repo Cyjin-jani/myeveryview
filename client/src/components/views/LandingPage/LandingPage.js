@@ -6,7 +6,8 @@ import ImageSlider from '../../utils/ImageSlider';
 import Meta from 'antd/lib/card/Meta';
 import StarRatings from 'react-star-ratings';
 import Checkbox from './Sections/CheckBox';
-import { categories } from './Sections/Datas';
+import Radiobox from './Sections/RadioBox';
+import { categories, price } from './Sections/Datas';
 
 function LandingPage() {
 
@@ -24,7 +25,7 @@ function LandingPage() {
         //리뷰 게시글 수 컨트롤 하기 위한 변수들. (더보기 버튼 활용)
         let body = {
             skip: Skip,
-            limit: Limit
+            // limit: Limit
         }
 
         getProducts(body)
@@ -37,10 +38,10 @@ function LandingPage() {
                 if (response.data.success) {
                     // console.log(response.data);
                     if (body.loadMore) {
-                        console.log('더보기버튼 누름');
+                        // console.log('더보기버튼 누름');
                         setProducts([...Products, ...response.data.productsInfo])
                     } else {
-                        setProducts(response.data.productsInfo)
+                        setProducts(response.data.productsInfo.slice(0, 4))
                     }
                     setPostSize(response.data.postSize)
                 }else {
@@ -94,13 +95,26 @@ function LandingPage() {
     const showFilteredResults = (filters) => {
         let body = {
             skip: 0, //checkbox 누를때마다 처음부터 다시 시작해서 가져와야 하므로 0
-            limit: Limit,
+            // limit: Limit,
             filters: filters
         }
-        console.log("filters의 body", body, filters);
+        // console.log("filters의 body", body, filters);
         getProducts(body)
         setSkip(0)
 
+    }
+
+    const handlePrice = (value) => {
+        const data = price;
+        let priceRange = [];
+
+        for (let key in data) {
+
+            if(data[key]._id === parseInt(value, 10)) {
+                priceRange = data[key].rangeArray;
+            }
+        }
+        return priceRange;
     }
 
     const handleFilters = (filters, filterCategory) => {
@@ -108,24 +122,39 @@ function LandingPage() {
         const newFilters = {...Filters }
         //자식 컴포넌트 (checkbox)에서 가져온 걸 넣어준다.
         newFilters[filterCategory] = filters;
+        
+        if (filterCategory === 'price') {
+            let priceValues = handlePrice(filters);
+            newFilters[filterCategory] = priceValues;
+        }
 
         showFilteredResults(newFilters)
-
+        setFilters(newFilters)
 
     }   
 
     
 
     return (
-        <div style={{ width: '75%', margin: '3rem auto'}}>
+        <div style={{ width: '75%', margin: '1.5rem auto', height: '100%'}}>
             <div style={{ textAlign: 'center' }}>
                 <h2>마이 에브리뷰~ 🤦‍♂️</h2>
             </div>
 
             {/* 검색 필터 넣을 곳 */}
             
-            {/* 카테고리 체크박스 */}
-            <Checkbox list={categories} handleFilters={filters => handleFilters(filters, "categories")} />
+            <Row gutter={[16, 16]} type="flex" justify="start">
+                <Col lg={12} xs={24}>
+                    {/* 카테고리 체크박스 */}
+                    <Checkbox list={categories} handleFilters={filters => handleFilters(filters, "categories")} />
+                </Col>
+                <Col lg={12} xs={24}>
+                    {/* price 라디오박스 */}
+                    <Radiobox list={price} handleFilters={filters => handleFilters(filters, "price")} />
+                </Col>
+            </Row>
+
+
 
             {/* 검색 */}
 
@@ -136,7 +165,7 @@ function LandingPage() {
             </Row>
 
             {PostSize > Limit && 
-                <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                <div style={{display: 'flex', justifyContent: 'center', margin: '20px'}}>
                     <Button onClick={loadMoreHandler}>더보기</Button>
                 </div>
             }

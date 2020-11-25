@@ -52,15 +52,30 @@ router.post('/allProducts', (req, res) => {
   let limit = req.body.limit ? parseInt(req.body.limit) : 20;
   //만약 스킵이 없다면 처음부터 데이터를 보여줘야 함. (만약 이미 데이터가 있다면, 그 다음 게시물부터 보여줘야함)
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  console.log("skip과 limit: ", skip, limit);
 
   let findArgs = {};
   for(let key in req.body.filters) {
     
     if(req.body.filters[key].length > 0){
-      findArgs[key] = req.body.filters[key];
+
+      // console.log('key', key);
+      if (key === 'price') {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0], //greater than equal 크거나 같은
+          $lte: req.body.filters[key][1] //less than equal 작거나 같은
+        }
+      } else {
+        //category인 경우에만.
+        findArgs[key] = req.body.filters[key];
+      }
+
+    
+    
     }
 
   }
+  console.log('findArgs: ', findArgs);
   // 어떤 카테고리만 가져올 지를 find에다가 findArgs로 넣어줌.
   // console.log('findArgs', findArgs);
 

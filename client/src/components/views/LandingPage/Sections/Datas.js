@@ -37,4 +37,39 @@ const categories = [
     },
 ]
 
-export { categories}
+const price = [
+    {
+        "_id" : 0,
+        "name" : "전체",
+        "rangeArray": []
+    },
+    {
+        "_id" : 1,
+        "name" : "5천원 미만",
+        "rangeArray": [0, 4999]
+    },
+    {
+        "_id" : 2,
+        "name" : "5천원 ~ 1만원",
+        "rangeArray": [5000, 10000]
+    },
+    {
+        "_id" : 3,
+        "name" : "1만원 ~ 3만원",
+        "rangeArray": [10000, 30000]
+    },
+    {
+        "_id" : 4,
+        "name" : "3만원 ~ 5만원",
+        "rangeArray": [30000, 50000]
+    },
+    {
+        "_id" : 5,
+        "name" : "5만원 이상",
+        "rangeArray": [50000, 999999999]
+    },
+    
+
+]
+
+export { categories, price}
