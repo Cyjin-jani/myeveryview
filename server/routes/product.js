@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
 
 })
 
-//전체 리뷰 가져오기
+//리뷰 가져오기
 router.post('/allProducts', (req, res) => {
   
   //product collection안에 들어있는 모든 상품 정보 불러오기.
@@ -52,7 +52,8 @@ router.post('/allProducts', (req, res) => {
   let limit = req.body.limit ? parseInt(req.body.limit) : 20;
   //만약 스킵이 없다면 처음부터 데이터를 보여줘야 함. (만약 이미 데이터가 있다면, 그 다음 게시물부터 보여줘야함)
   let skip = req.body.skip ? parseInt(req.body.skip) : 0;
-  console.log("skip과 limit: ", skip, limit);
+  // console.log("skip과 limit: ", skip, limit);
+  let term = req.body.searchTerm;
 
   let findArgs = {};
   for(let key in req.body.filters) {
@@ -79,18 +80,38 @@ router.post('/allProducts', (req, res) => {
   // 어떤 카테고리만 가져올 지를 find에다가 findArgs로 넣어줌.
   // console.log('findArgs', findArgs);
 
-  Product.find(findArgs)
-    .populate('writer') //writer에 대한 모든 정보 가져옴.
-    .skip(skip)
-    .limit(limit)
-    .exec((err, productsInfo) => {
-      if (err) return res.status(400).json({success: false, err})
-      console.log('db값');
-      for(let i in productsInfo){
-        console.log("리뷰들", productsInfo[i].title);
-      }
-      return res.status(200).json({success: true, productsInfo, postSize: productsInfo.length})
-    })
+  if (term) {
+    //검색어 있는 경우
+    Product.find(findArgs)
+      .find({ $text: { $search: term } }) //검색어 통해서 가져오도록.
+      .populate('writer') //writer에 대한 모든 정보 가져옴.
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productsInfo) => {
+        if (err) return res.status(400).json({success: false, err})
+        console.log('db값');
+        for(let i in productsInfo){
+          console.log("리뷰들", productsInfo[i].title);
+        }
+        return res.status(200).json({success: true, productsInfo, postSize: productsInfo.length})
+      })
+  } else {
+    //검색어 없는 경우
+    Product.find(findArgs)
+      .populate('writer') //writer에 대한 모든 정보 가져옴.
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productsInfo) => {
+        if (err) return res.status(400).json({success: false, err})
+        console.log('db값');
+        for(let i in productsInfo){
+          console.log("리뷰들", productsInfo[i].title);
+        }
+        return res.status(200).json({success: true, productsInfo, postSize: productsInfo.length})
+      })
+  }
+
+
 
 })
 

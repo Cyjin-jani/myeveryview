@@ -54,6 +54,16 @@ const productSchema = mongoose.Schema({
     },
 }, { timestamps: true })
 
+//검색 기능 관련 설정
+productSchema.index({
+    title: 'text',
+    reviewDescription: 'text'
+}, {//어떤 부분을 더 중점적으로 검색할 지.
+    weights:{
+        title: 5,
+        reviewDescription: 1
+    }
+})
 
 const Product = mongoose.model('Product', productSchema);
 

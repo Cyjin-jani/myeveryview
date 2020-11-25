@@ -7,6 +7,7 @@ import Meta from 'antd/lib/card/Meta';
 import StarRatings from 'react-star-ratings';
 import Checkbox from './Sections/CheckBox';
 import Radiobox from './Sections/RadioBox';
+import SearchFeature from './Sections/SearchFeature';
 import { categories, price } from './Sections/Datas';
 
 function LandingPage() {
@@ -19,6 +20,7 @@ function LandingPage() {
         categories: [],
         price: []
     });
+    const [SearchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
 
@@ -133,6 +135,20 @@ function LandingPage() {
 
     }   
 
+    const updateSearchTerm = (newSearchTerm) => {
+        
+        let body = {
+            skip: 0,
+            limit: Limit,
+            filters: Filters,
+            searchTerm: newSearchTerm
+        }
+        setSkip(0)
+        setSearchTerm(newSearchTerm)
+        getProducts(body)
+
+    }
+
     
 
     return (
@@ -154,10 +170,10 @@ function LandingPage() {
                 </Col>
             </Row>
 
-
-
             {/* 검색 */}
-
+            <div style={{display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
+            <SearchFeature refreshFunction={updateSearchTerm} />
+            </div>
             {/* cards */}
             <Row gutter={[16, 16]} type="flex" justify="start">
                 {renderCards}
