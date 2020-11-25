@@ -83,7 +83,8 @@ router.post('/allProducts', (req, res) => {
   if (term) {
     //검색어 있는 경우
     Product.find(findArgs)
-      .find({ $text: { $search: term } }) //검색어 통해서 가져오도록.
+      .find({$or: [{title: { $regex: term }}, {reviewDescription: {$regex: term}}] }) //검색어 통해서 가져오도록.
+      // .find({$text: {$search: term}})
       .populate('writer') //writer에 대한 모든 정보 가져옴.
       .skip(skip)
       .limit(limit)
