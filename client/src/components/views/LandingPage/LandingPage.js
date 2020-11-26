@@ -59,7 +59,8 @@ function LandingPage() {
         let body = {
             skip: skip,
             limit: Limit,
-            loadMore: true
+            loadMore: true,
+            filters: Filters
         }
 
         getProducts(body)
