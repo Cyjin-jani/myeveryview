@@ -8,6 +8,7 @@ import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import UserInfoPage from "./views/UserInfoPage/UserInfoPage.js";
 import ResetPage from './views/ResetPage/ResetPage.js';
 import UploadProductPage from './views/UploadProductPage/UploadProductPage.js';
+import DetailReviewPage from './views/DetailReviewPage/DetailReviewPage';
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route exact path="/userInfo" component={Auth(UserInfoPage, true)} />
           <Route exact path="/product/upload" component={Auth(UploadProductPage, true)} />
+          <Route exact path="/product/:productId" component={Auth(DetailReviewPage, null)} />
         </Switch>
       </div>
       <Footer />
