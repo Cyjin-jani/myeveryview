@@ -5,6 +5,7 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     UPDATE_USER,
+    ADD_TO_SCRAP,
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -48,7 +49,7 @@ export function logoutUser(){
     }
 }
 
-
+//유저 정보 업데이트 관련 액션
 export function updateUser(dataToSubmit){
     // console.log('data 액션에 잘 넘어왔니?', dataToSubmit);
     const request = axios.post(`${USER_SERVER}/update`, dataToSubmit)
@@ -56,6 +57,21 @@ export function updateUser(dataToSubmit){
 
     return {
         type: UPDATE_USER,
+        payload: request
+    }
+}
+
+//scrap관련 액션
+export function addToScrap(id){
+    // console.log('data 액션에 잘 넘어왔니?', id);
+    let body = {
+        reviewProductId: id
+    }
+    const request = axios.post(`${USER_SERVER}/addToScrap`, body)
+    .then(response => response.data);
+
+    return {
+        type: ADD_TO_SCRAP,
         payload: request
     }
 }

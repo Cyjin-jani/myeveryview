@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema({
         type:Number,
         default: 0 
     },
+    scrap: {
+        type: Array,
+        default: []
+    },
     image: String,
     token : {
         type: String,
@@ -62,8 +66,12 @@ userSchema.pre('findOneAndUpdate', function( next ) {
     if (Object.keys(user.options).length === 0) {
         next()
     }
+    //scrap 하기를 누른 경우
+    else if (user._update.$push.scrap) {
+        next()
+    }
     //updateUser할 때는 options에 new가 true임.
-    else {    
+    else {
         console.log('password changed -- 비밀번호 암호화 시작')
         bcrypt.genSalt(saltRounds, function(err, salt){
             if(err) return next(err);

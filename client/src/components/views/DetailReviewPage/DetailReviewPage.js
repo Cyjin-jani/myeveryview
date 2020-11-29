@@ -3,12 +3,14 @@ import axios from 'axios';
 import ProductImage from './Sections/ProductImage';
 import ReviewInfo from './Sections/ReviewInfo';
 import { Row, Col, Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { addToScrap } from '../../../_actions/user_actions';
 
 function DetailReviewPage(props) {
     
     const productReviewId = props.match.params.productId;
-
     const [Product, setProduct] = useState({});
+    const dispatch = useDispatch();
 
     useEffect(() => {
         
@@ -25,7 +27,9 @@ function DetailReviewPage(props) {
     }, [])
 
     const clickHandler = () => {
-        
+        //필요한 정보를 scrap필드에 넣어줌.(리뷰글에 대한 ID필요, 스크랩 한 날짜 정도..)
+        // console.log('review ID', Product._id)
+        dispatch(addToScrap(Product._id))
     }
 
     return (
@@ -34,7 +38,7 @@ function DetailReviewPage(props) {
                 <h1>{Product.title}</h1>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <Button size="large" shape="round" type="danger" onClick={clickHandler}>
-                        스크랩 버튼
+                        스크랩 하기
                     </Button>
                 </div>
             </div>

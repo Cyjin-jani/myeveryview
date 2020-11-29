@@ -4,6 +4,7 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     UPDATE_USER,
+    ADD_TO_SCRAP,
 } from '../_actions/types';
  
 
@@ -19,6 +20,12 @@ export default function(state={},action){
             return {...state }
         case UPDATE_USER:
             return {...state, userSuccess: action.payload} //임시
+        case ADD_TO_SCRAP:
+            return {...state, 
+                    userData: {
+                        ...state.userData,
+                        scrap: action.payload
+                }}
             
         default:
             return state;

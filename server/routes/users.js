@@ -18,6 +18,7 @@ router.get("/auth", auth, (req, res) => {
         lastname: req.user.lastname,
         role: req.user.role,
         image: req.user.image,
+        scrap: req.user.scrap,
     });
 });
 
@@ -98,6 +99,48 @@ router.post("/update", (req, res) => {
         });
     });
 
+});
+
+
+router.post("/addToScrap", auth, (req, res) => {
+    console.log('scrap기능');
+    //해당 유저의 정보를 가져오기.
+    
+    User.findOne({ _id: req.user._id }, (err, userInfo) => {
+        //가져온 정보에서 스크랩하려는 상품리뷰가 이미 있는 지 확인.
+        let alreadyScrapped = false;
+
+        userInfo.scrap.forEach((item) => {
+            if(item.id === req.body.reviewProductId) {
+                //이미 들어 있다
+                alreadyScrapped = true;
+            }
+        })
+
+        //상품리뷰가 이미 스크랩 되어 있는 경우
+        if(alreadyScrapped) {
+            return res.status(400).json({alreadySaved: true})
+
+        } else {
+            //상품리뷰가 스크랩 되지 않은 경우
+            User.findOneAndUpdate(
+                {_id: req.user._id},
+                {
+                    $push: {
+                        scrap: {
+                            id: req.body.reviewProductId,
+                            date: Date.now()
+                        }
+                    }
+                },
+                { new: true },
+                (err, userInfo) => {
+                    if (err) return res.status(400).json({success: false, err})
+                    res.status(200).send(userInfo.scrap);
+                }
+            )
+        }
+    })
 });
 
 module.exports = router;
