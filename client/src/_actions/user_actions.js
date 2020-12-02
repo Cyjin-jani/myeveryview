@@ -6,6 +6,8 @@ import {
     LOGOUT_USER,
     UPDATE_USER,
     ADD_TO_SCRAP,
+    GET_SCRAP_ITEMS
+    
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
 
@@ -75,4 +77,22 @@ export function addToScrap(id){
         payload: request
     }
 }
+
+
+export function getScrapItems(scrapItems, userScrap){
+    
+    const request = axios.get(`/api/product/reviewProducts_by_id?id=${scrapItems}&type=array`)
+    .then(response => {
+        return response.data
+    });
+
+    return {
+        type: GET_SCRAP_ITEMS,
+        payload: request
+    }
+}
+
+
+
+
 

@@ -117,10 +117,17 @@ router.post('/allProducts', (req, res) => {
 router.get('/reviewProducts_by_id', (req, res) => {
   
   let type = req.query.type;
-  let productId = req.query.id;
+  let productIds = req.query.id;
 
-  //productId를 이용하여 DB에서 ProductID와 같은 상품의 정보를 가져옴.
-  Product.find({_id: productId})
+  if(type === "array") {
+    let ids = req.query.id.split(',');
+    productIds = ids.map(item => {
+      return item
+    })
+  }
+
+  //productIds를 이용하여 DB에서 ProductIDs와 같은 상품의 정보를 가져옴.
+  Product.find({_id: {$in: productIds}})
         .populate('writer')
         .exec((err, product) => {
           if(err) return res.status(400).send(err)

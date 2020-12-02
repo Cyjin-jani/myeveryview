@@ -5,6 +5,7 @@ import {
     LOGOUT_USER,
     UPDATE_USER,
     ADD_TO_SCRAP,
+    GET_SCRAP_ITEMS,
 } from '../_actions/types';
  
 
@@ -26,7 +27,9 @@ export default function(state={},action){
                         ...state.userData,
                         scrap: action.payload
                 }}
-            
+        case GET_SCRAP_ITEMS:
+            return { ...state, reviewDetail: action.payload }
+                    
         default:
             return state;
     }
