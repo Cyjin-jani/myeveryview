@@ -72,8 +72,9 @@ function LandingPage() {
         // console.log(product);
 
         return <Col lg={6} md={8} xs={24} key={index} >
+            <a href={`/product/${product._id}`}>
             <Card
-                cover={<a href={`/product/${product._id}`}><ImageSlider images={product.images} /></a>}
+                cover={<ImageSlider images={product.images} />}
                 bodyStyle={{paddingBottom: '5px'}}
             >
                 <Meta
@@ -92,6 +93,7 @@ function LandingPage() {
                 />
                 
             </Card>
+            </a>
         </Col>
     })
 
