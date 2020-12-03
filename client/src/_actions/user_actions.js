@@ -6,7 +6,8 @@ import {
     LOGOUT_USER,
     UPDATE_USER,
     ADD_TO_SCRAP,
-    GET_SCRAP_ITEMS
+    GET_SCRAP_ITEMS,
+    REMOVE_SCRAP_ITEM
     
 } from './types';
 import { USER_SERVER } from '../components/Config.js';
@@ -70,7 +71,12 @@ export function addToScrap(id){
         reviewProductId: id
     }
     const request = axios.post(`${USER_SERVER}/addToScrap`, body)
-    .then(response => response.data);
+    .then(response => {
+        if(response.data === true) {
+            return alert('이미 상품이 스크랩 되었습니다.')
+        }
+        return response.data
+    })
 
     return {
         type: ADD_TO_SCRAP,
@@ -78,7 +84,7 @@ export function addToScrap(id){
     }
 }
 
-
+//scrap한 리뷰들 정보 가져오기
 export function getScrapItems(scrapItems, userScrap){
     
     const request = axios.get(`/api/product/reviewProducts_by_id?id=${scrapItems}&type=array`)
@@ -91,6 +97,21 @@ export function getScrapItems(scrapItems, userScrap){
         payload: request
     }
 }
+
+//scrap item 지우기
+export function removeScrapItem(reviewId){
+    
+    const request = axios.get(`/api/users/removeFromScrap?id=${reviewId}`)
+    .then(response => {
+        return response.data
+    });
+
+    return {
+        type: REMOVE_SCRAP_ITEM,
+        payload: request
+    }
+}
+
 
 
 

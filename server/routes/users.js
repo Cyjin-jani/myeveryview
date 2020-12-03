@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require("../models/User");
 
 const { auth } = require("../middleware/auth");
+const { Product } = require('../models/Product');
 
 //=================================
 //             User
@@ -119,7 +120,8 @@ router.post("/addToScrap", auth, (req, res) => {
 
         //상품리뷰가 이미 스크랩 되어 있는 경우
         if(alreadyScrapped) {
-            return res.status(400).json({alreadySaved: true})
+            // console.log('상품이 이미 스크랩 되어있다.');
+            return res.status(200).send(alreadyScrapped);
 
         } else {
             //상품리뷰가 스크랩 되지 않은 경우
@@ -135,6 +137,7 @@ router.post("/addToScrap", auth, (req, res) => {
                 },
                 { new: true },
                 (err, userInfo) => {
+                    // console.log('ADDTOscrap의 userInfo', userInfo);
                     if (err) return res.status(400).json({success: false, err})
                     res.status(200).send(userInfo.scrap);
                 }
@@ -142,5 +145,43 @@ router.post("/addToScrap", auth, (req, res) => {
         }
     })
 });
+
+
+router.get('/removeFromScrap', auth, (req, res) => {
+    
+    //스크랩한 목록 중 지우고자 하는 리뷰 삭제
+    User.findOneAndUpdate(
+        {_id: req.user._id},
+        {
+            $pull: {
+                scrap: { id: req.query.id }
+            }
+        },
+        { new: true },
+        (err, userInfo) => {
+            if(err) {
+                console.log(err);
+            }
+            console.log('userinfo: ', userInfo);
+            //product collection에서 현재 남아있는 정보들을 가져오기. 
+            let scrap = userInfo.scrap;
+            let array = scrap.map(item => {
+                return item.id
+            })
+
+            Product.find({_id: { $in: array }})
+            .populate('writer')
+            .exec((err, reviewInfo) => {
+                return res.status(200).json({
+                    reviewInfo,
+                    scrap
+                })
+            })
+        }
+    )
+
+})
+
+
 
 module.exports = router;

@@ -26,7 +26,7 @@ function UserCardBlock(props) {
                     {review.stars}
                 </td>
                 <td>
-                    <button>
+                    <button onClick={()=>props.removeItem(review._id)}>
                         Remove
                     </button>
                 </td>

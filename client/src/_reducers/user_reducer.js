@@ -6,6 +6,7 @@ import {
     UPDATE_USER,
     ADD_TO_SCRAP,
     GET_SCRAP_ITEMS,
+    REMOVE_SCRAP_ITEM,
 } from '../_actions/types';
  
 
@@ -28,7 +29,11 @@ export default function(state={},action){
                         scrap: action.payload
                 }}
         case GET_SCRAP_ITEMS:
-            return { ...state, reviewDetail: action.payload }
+            return { ...state, scrapDetail: action.payload }
+        case REMOVE_SCRAP_ITEM:
+            return { ...state, scrapDetail: action.payload.reviewInfo,
+                userData: {...state.userData, scrap: action.payload.scrap}
+            }
                     
         default:
             return state;

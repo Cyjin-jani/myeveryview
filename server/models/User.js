@@ -61,16 +61,17 @@ userSchema.pre('save', function( next ) {
 
 userSchema.pre('findOneAndUpdate', function( next ) {
     var user = this;
+    console.log('User유저: ', user._update.$pull);
 
     //logout 할 때는 options가 빈 객체
     if (Object.keys(user.options).length === 0) {
         next()
     }
-    //scrap 하기를 누른 경우
-    else if (user._update.$push.scrap) {
+    //scrap 하기를 누른 경우 또는 스크랩 삭제를 누른 경우
+    else if (user._update.$push || user._update.$pull) {
         next()
     }
-    //updateUser할 때는 options에 new가 true임.
+    
     else {
         console.log('password changed -- 비밀번호 암호화 시작')
         bcrypt.genSalt(saltRounds, function(err, salt){

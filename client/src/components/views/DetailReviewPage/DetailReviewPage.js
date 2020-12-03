@@ -16,13 +16,9 @@ function DetailReviewPage(props) {
         
         axios.get(`/api/product/reviewProducts_by_id?id=${productReviewId}&type=single`)
             .then(response => {
-                if (response.data.success) {
-                    console.log(response.data.product);
-                    setProduct(response.data.product[0])
-                }else {
-                    alert('상세리뷰 가져오기 실패!')
-                }
+                setProduct(response.data[0])
             })
+            .catch(err => alert("상세리뷰 불러오기 실패", err))
         
     }, [])
 
