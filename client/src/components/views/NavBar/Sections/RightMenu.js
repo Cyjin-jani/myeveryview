@@ -33,7 +33,7 @@ function RightMenu(props) {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="scrap" style={{paddingBottom: 3}}>
-          <Badge count={user.userData && user.userData.scrap.length}>
+          <Badge count={user.userData && user.userData.scrap && user.userData.scrap.length }>
             <a href="/user/scrap" style={{marginRight: -22, color: '#667777'}}>
               <Icon type="book" style={{fontSize: 30, marginBottom: 3}}></Icon>
             </a>

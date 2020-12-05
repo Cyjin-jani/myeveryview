@@ -120,7 +120,7 @@ router.post("/addToScrap", auth, (req, res) => {
 
         //상품리뷰가 이미 스크랩 되어 있는 경우
         if(alreadyScrapped) {
-            // console.log('상품이 이미 스크랩 되어있다.');
+            console.log('상품이 이미 스크랩 되어있다.');
             return res.status(200).send(alreadyScrapped);
 
         } else {

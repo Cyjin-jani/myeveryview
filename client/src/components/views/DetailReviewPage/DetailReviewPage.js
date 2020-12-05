@@ -11,7 +11,7 @@ function DetailReviewPage(props) {
     const productReviewId = props.match.params.productId;
     const [Product, setProduct] = useState({});
     const dispatch = useDispatch();
-
+   
     useEffect(() => {
         
         axios.get(`/api/product/reviewProducts_by_id?id=${productReviewId}&type=single`)
@@ -21,6 +21,21 @@ function DetailReviewPage(props) {
             .catch(err => alert("상세리뷰 불러오기 실패", err))
         
     }, [])
+
+    //이미 스크랩 되어 있는 지 확인
+    const checkScrapped = () => {
+        //유저 정보에서 scrap 배열을 확인하여 리뷰아이디가 일치하는지 확인
+        let result = false
+        if (props.user.userData) {
+            let scrapList = props.user.userData.scrap
+            scrapList.map(item => {
+                if (item.id === Product._id) {
+                    result = true
+                }
+            })
+            return result
+        }
+    }
 
     const clickHandler = () => {
         //필요한 정보를 scrap필드에 넣어줌.(리뷰글에 대한 ID필요, 스크랩 한 날짜 정도..)
@@ -33,9 +48,15 @@ function DetailReviewPage(props) {
             <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                 <h1>{Product.title}</h1>
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <Button size="large" shape="round" type="danger" onClick={clickHandler}>
-                        스크랩 하기
-                    </Button>
+                    {checkScrapped() ? 
+                        <Button size="large" shape="round" type="danger" disabled>
+                            스크랩 하기
+                        </Button>
+                    :
+                        <Button size="large" shape="round" type="danger" onClick={clickHandler}>
+                            스크랩 하기
+                        </Button>
+                    }
                 </div>
             </div>
 
