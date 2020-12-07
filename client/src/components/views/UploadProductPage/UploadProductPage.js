@@ -14,7 +14,7 @@ const Categories = [
     {key: 5, value: "악세서리"},
     {key: 6, value: "의약품"},
     {key: 7, value: "장소"},
-    {key: 8, value: "게임"},
+    {key: 8, value: "생활용품"},
     {key: 9, value: "SW 프로그램(어플)"},
 ]
 const config = {

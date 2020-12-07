@@ -29,7 +29,7 @@ const categories = [
     },
     {
         "_id" : 8,
-        "name" : "게임"
+        "name" : "생활용품"
     },
     {
         "_id" : 9,

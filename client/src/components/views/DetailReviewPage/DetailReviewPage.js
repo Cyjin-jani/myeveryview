@@ -27,12 +27,14 @@ function DetailReviewPage(props) {
         //유저 정보에서 scrap 배열을 확인하여 리뷰아이디가 일치하는지 확인
         let result = false
         if (props.user.userData) {
-            let scrapList = props.user.userData.scrap
-            scrapList.map(item => {
-                if (item.id === Product._id) {
-                    result = true
-                }
-            })
+            if (props.user.userData.scrap) {
+                let scrapList = props.user.userData.scrap
+                scrapList.map(item => {
+                    if (item.id === Product._id) {
+                        result = true
+                    }
+                })
+            }
             return result
         }
     }
