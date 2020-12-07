@@ -10,6 +10,7 @@ function DetailReviewPage(props) {
     
     const productReviewId = props.match.params.productId;
     const [Product, setProduct] = useState({});
+    const [ReviewWriter, setReviewWriter] = useState("");
     const dispatch = useDispatch();
    
     useEffect(() => {
@@ -17,9 +18,9 @@ function DetailReviewPage(props) {
         axios.get(`/api/product/reviewProducts_by_id?id=${productReviewId}&type=single`)
             .then(response => {
                 setProduct(response.data[0])
+                setReviewWriter(response.data[0].writer._id)
             })
             .catch(err => alert("상세리뷰 불러오기 실패", err))
-        
     }, [])
 
     //이미 스크랩 되어 있는 지 확인
@@ -39,10 +40,25 @@ function DetailReviewPage(props) {
         }
     }
 
+    //리뷰수정이 가능한 글쓴이인지 체크
+    const checkWriter = () => {
+        
+        if (props.user.userData && ReviewWriter) {
+            if (props.user.userData._id === ReviewWriter) {
+                return true
+            }
+            
+        }
+    }
+
     const clickHandler = () => {
         //필요한 정보를 scrap필드에 넣어줌.(리뷰글에 대한 ID필요, 스크랩 한 날짜 정도..)
         // console.log('review ID', Product._id)
         dispatch(addToScrap(Product._id))
+    }
+
+    const reviewHandler = () => {
+        props.history.push(`/product/updateReview/${Product._id}`)
     }
 
     return (
@@ -73,6 +89,14 @@ function DetailReviewPage(props) {
                     <ReviewInfo detail={Product} />
                 </Col>
             </Row>
+            <br />
+            <div style={{display: 'flex', justifyContent: 'center' }}>
+                {checkWriter() && 
+                    <Button size="large" shape="round" type="primary" onClick={reviewHandler}>
+                        리뷰수정하기
+                    </Button>
+                }
+            </div>
         </div>
     )
 }

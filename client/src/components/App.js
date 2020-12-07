@@ -10,6 +10,7 @@ import ResetPage from './views/ResetPage/ResetPage.js';
 import UploadProductPage from './views/UploadProductPage/UploadProductPage.js';
 import DetailReviewPage from './views/DetailReviewPage/DetailReviewPage';
 import ScrapPage from './views/ScrapPage/ScrapPage';
+import UpdateReviewPage from './views/UpdateReviewPage/UpdateReviewPage';
 import NavBar from "./views/NavBar/NavBar";
 import Footer from "./views/Footer/Footer"
 
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/product/upload" component={Auth(UploadProductPage, true)} />
           <Route exact path="/product/:productId" component={Auth(DetailReviewPage, null)} />
           <Route exact path="/user/scrap" component={Auth(ScrapPage, true)} />
+          <Route exact path="/product/updateReview/:productId" component={Auth(UpdateReviewPage, true)} />
         </Switch>
       </div>
       <Footer />
