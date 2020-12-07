@@ -14,7 +14,9 @@ function UserCardBlock(props) {
         props.reviews && props.reviews.map((review, index) => (
             <tr key={index}>
                 <td>
+                    <a href={`/product/${review._id}`}>
                     <img style={{width: '70px'}} alt="review" src={renderImage(review.images)} />
+                    </a>
                 </td>
                 <td>
                     {review.title}
