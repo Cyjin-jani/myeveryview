@@ -32,13 +32,13 @@ function RightMenu(props) {
   } else {
     return (
       <Menu mode={props.mode}>
-        <Menu.Item key="scrap" style={{paddingBottom: 3}}>
+        {/* <Menu.Item key="scrap" style={{paddingBottom: 3}}>
           <Badge count={user.userData && user.userData.scrap && user.userData.scrap.length }>
             <a href="/user/scrap" style={{marginRight: -22, color: '#667777'}}>
               <Icon type="book" style={{fontSize: 30, marginBottom: 3}}></Icon>
             </a>
           </Badge>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="upload">
           <a href="/product/upload">upload</a>
         </Menu.Item>
