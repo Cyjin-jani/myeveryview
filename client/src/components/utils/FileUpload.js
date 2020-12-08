@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 //dropzone이라는 라이브러리를 이용할 것이므로, npm i react-dropzone필요.
 import Dropzone from 'react-dropzone';
 //+아이콘을 사용하기 위해 임포트.
@@ -7,8 +7,12 @@ import { Icon } from 'antd';
 import axios from 'axios';
 
 function FileUpload(props) {
-
+    // console.log("fileupload에 넘긴 이미지", props.images);
     const [Images, setImages] = useState([]);
+
+    useEffect(() => {
+        setImages(props.images)
+    }, [Images])
 
     const dropHandler = (files) => {
         
@@ -64,7 +68,7 @@ function FileUpload(props) {
             <section>
             <label style={{display: 'inline'}}>이미지 미리보기</label>
             <div style={{display: 'flex', width: '320px', height: '240px', border: '1px solid lightgray', overflowX: 'scroll'}}>
-                {Images.map((image, index) => (
+                {Images && Images.map((image, index) => (
                     <div onClick={() => deleteHandler(image)} key={index}>
                         <img style={{minWidth: '300px', width: '300px', height: '240px'}}
                         src={`http://localhost:5000/${image}`} />

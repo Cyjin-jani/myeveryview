@@ -137,6 +137,29 @@ router.get('/reviewProducts_by_id', (req, res) => {
 })
 
 
+//리뷰 수정하기
+router.post('/updateReview', (req, res) => {
+  
+  let reviewUpdate = {
+    title: req.body.title,
+    reviewDescription: req.body.reviewDescription,
+    price: req.body.price,
+    images: req.body.images,
+    categories: req.body.category,
+    stars: req.body.stars,
+    rebuy: req.body.rebuy,
+    usedDate: req.body.usedDate
+  }
+
+  Product.findOneAndUpdate({_id: req.body.id}, reviewUpdate, {new: true}, (err, doc) => {
+    if (err) return res.json({ success: false, err });
+        return res.status(200).send({ success: true });
+  })
+
+
+})
+
+
 
 module.exports = router;
  

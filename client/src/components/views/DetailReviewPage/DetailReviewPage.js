@@ -58,7 +58,7 @@ function DetailReviewPage(props) {
     }
 
     const reviewHandler = () => {
-        props.history.push(`/product/updateReview/${Product._id}`)
+        props.history.push(`/product/updateReview/${Product._id}`, Product)
     }
 
     return (
