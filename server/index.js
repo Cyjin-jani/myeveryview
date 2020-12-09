@@ -36,6 +36,7 @@ app.use(cookieParser());
 //라우팅을 활용하여 요청처리 하는 부분을 나누어 준다.
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
+app.use('/api/comment', require('./routes/comment'));
 
 
 //use this to show the image you have in node js server to client (react js)

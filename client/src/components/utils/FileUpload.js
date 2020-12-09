@@ -11,8 +11,11 @@ function FileUpload(props) {
     const [Images, setImages] = useState([]);
 
     useEffect(() => {
-        setImages(props.images)
-    }, [Images])
+        if (props.images) {
+            console.log('image 나와라');
+            setImages(props.images)
+        }
+    }, [props.images])
 
     const dropHandler = (files) => {
         

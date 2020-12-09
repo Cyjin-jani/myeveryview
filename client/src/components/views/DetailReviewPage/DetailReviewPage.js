@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import ProductImage from './Sections/ProductImage';
 import ReviewInfo from './Sections/ReviewInfo';
+import Comment from './Sections/Comment';
 import { Row, Col, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { addToScrap } from '../../../_actions/user_actions';
@@ -95,8 +96,12 @@ function DetailReviewPage(props) {
                     <Button size="large" shape="round" type="primary" onClick={reviewHandler}>
                         리뷰수정하기
                     </Button>
+                    
                 }
+                <br />
             </div>
+            <br />
+            <Comment postId={productReviewId} />
         </div>
     )
 }
