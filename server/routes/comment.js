@@ -7,7 +7,7 @@ const { Comment } = require('../models/Comment');
 //             Comment
 //=================================
 
-
+//댓글 저장
 router.post("/saveComment", (req, res) => {
     const comment = new Comment(req.body)
 
@@ -23,6 +23,18 @@ router.post("/saveComment", (req, res) => {
             })
 
     })
+})
+
+//댓글(전체) 불러오기
+router.post("/getComments", (req, res) => {
+
+    Comment.find({ postId: req.body.postId})
+        .populate('writer')
+        .exec((err, comments) => {
+            if(err) return res.status(400).send(err)
+            res.status(200).json({success: true, comments})
+        })
+
 })
 
 

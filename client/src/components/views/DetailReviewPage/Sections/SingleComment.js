@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Comment, Button, Input } from 'antd';
+import axios from 'axios';
 
 const { TextArea } = Input;
 
 function SingleComment(props) {
 
+    const user = useSelector(state => state.user);
     const [OpenReply, setOpenReply] = useState(false);
     const [CommentValue, setCommentValue] = useState("");
 
@@ -18,21 +21,24 @@ function SingleComment(props) {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        // const variables = {
-        //     content: CommentValue,
-        //     writer: user.userData._id,
-        //     postId: props.postId,
-        //     responseTo: ,
-        // }
+        const variables = {
+            content: CommentValue,
+            writer: user.userData._id,
+            postId: props.postId,
+            responseTo: props.comment._id,
+        }
 
-        // axios.post('/api/comment/saveComment', variables)
-        //     .then(response => {
-        //         if(response.data.success) {
-        //             // console.log(response.data.result);
-        //         } else {
-        //             alert('코멘트를 저장하지 못했습니다.')
-        //         }
-        //     })
+        axios.post('/api/comment/saveComment', variables)
+            .then(response => {
+                if(response.data.success) {
+                    // console.log(response.data.result);
+                    props.refreshFunction(response.data.result)
+                    setCommentValue("")
+                    setOpenReply(false)
+                } else {
+                    alert('코멘트를 저장하지 못했습니다.')
+                }
+            })
 
     }
 
@@ -45,8 +51,8 @@ function SingleComment(props) {
         <div>
             <Comment 
                 actions={actions}
-                author
-                content
+                author={<b>{props.comment.writer.name}</b>}
+                content={<p> {props.comment.content} </p>}
             />
 
             {OpenReply && 

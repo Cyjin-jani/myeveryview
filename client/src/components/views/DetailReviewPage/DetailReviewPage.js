@@ -12,16 +12,32 @@ function DetailReviewPage(props) {
     const productReviewId = props.match.params.productId;
     const [Product, setProduct] = useState({});
     const [ReviewWriter, setReviewWriter] = useState("");
+    const [Comments, setComments] = useState([]);
     const dispatch = useDispatch();
-   
+    const variable = {postId: productReviewId};
+
     useEffect(() => {
         
+        // review 가져오기
         axios.get(`/api/product/reviewProducts_by_id?id=${productReviewId}&type=single`)
             .then(response => {
                 setProduct(response.data[0])
                 setReviewWriter(response.data[0].writer._id)
             })
             .catch(err => alert("상세리뷰 불러오기 실패", err))
+
+        //댓글 가져오기
+        axios.post('/api/comment/getComments', variable)
+            .then(response => {
+                if(response.data.success) {
+                    setComments(response.data.comments)
+                    
+                }else {
+                    alert('댓글 가져오기 실패')
+                }
+            })
+        
+
     }, [])
 
     //이미 스크랩 되어 있는 지 확인
@@ -60,6 +76,10 @@ function DetailReviewPage(props) {
 
     const reviewHandler = () => {
         props.history.push(`/product/updateReview/${Product._id}`, Product)
+    }
+
+    const refreshFunction = (newComments) => {
+        setComments(Comments.concat(newComments))
     }
 
     return (
@@ -101,7 +121,7 @@ function DetailReviewPage(props) {
                 <br />
             </div>
             <br />
-            <Comment postId={productReviewId} />
+            <Comment postId={productReviewId} commentsList={Comments} refreshFunction={refreshFunction} />
         </div>
     )
 }

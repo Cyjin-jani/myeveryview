@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment';
+import ReplyComment from './ReplyComment';
 
 function Comment(props) {
     //redux에서 user정보 가져오기.
@@ -28,6 +29,8 @@ function Comment(props) {
             .then(response => {
                 if(response.data.success) {
                     // console.log(response.data.result);
+                    props.refreshFunction(response.data.result)
+                    setcommentValue("")
                 } else {
                     alert('코멘트를 저장하지 못했습니다.')
                 }
@@ -40,8 +43,17 @@ function Comment(props) {
             <p> 댓글 </p>
             <hr />
             {/* comment lists */}
-            <SingleComment postId={postId} />
+            {props.commentsList && props.commentsList.map((comment, index) => (
+                (!comment.responseTo && 
+                    <React.Fragment>
+                    <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={postId} key={index} />
+                    <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={postId} commentsList={props.commentsList} />
+                    </React.Fragment>
+                )
 
+            ))}
+
+            <br />
             {/* root comment form */}
             <form style={{display: 'flex'}} onSubmit={onSubmit}>
                 <textarea 
