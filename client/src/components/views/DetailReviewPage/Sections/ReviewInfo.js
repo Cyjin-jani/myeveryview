@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { Descriptions } from 'antd';
 import StarRatings from 'react-star-ratings';
 import { categories } from '../../LandingPage/Sections/Datas';
+import LikeDislikes from './LikeDislikes';
 
 function ReviewInfo(props) {
     // console.log(categories[6].name);
+    // console.log(props.detail._id);
     let writerName = ""
     if (props.detail.writer) {
         writerName = props.detail.writer.name;
@@ -12,7 +14,7 @@ function ReviewInfo(props) {
     
     return (
         <div>
-            <Descriptions title={`작성자: ${props.detail.writer ? writerName: ''}`} bordered size="small" layout='vertical' >
+            <Descriptions title={<div style={{display: 'flex', justifyContent: 'space-between'}}> 작성자: {props.detail.writer ? writerName: ''} <LikeDislikes review userId={localStorage.getItem('userId')} postId={props.detail._id} /> </div> } bordered size="small" layout='vertical' >
                 <Descriptions.Item label="제품명">{props.detail.title}</Descriptions.Item>
                 <Descriptions.Item label="카테고리">{props.detail.categories && categories[props.detail.categories-1].name}</Descriptions.Item>
                 <Descriptions.Item label="경험 날짜">{props.detail.usedDate && props.detail.usedDate.slice(0, 10)}</Descriptions.Item>

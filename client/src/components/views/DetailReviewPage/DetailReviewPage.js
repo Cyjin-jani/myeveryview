@@ -3,6 +3,7 @@ import axios from 'axios';
 import ProductImage from './Sections/ProductImage';
 import ReviewInfo from './Sections/ReviewInfo';
 import Comment from './Sections/Comment';
+// import LikeDislikes from './Sections/LikeDislikes';
 import { Row, Col, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { addToScrap } from '../../../_actions/user_actions';
@@ -86,7 +87,7 @@ function DetailReviewPage(props) {
         <div style={{ width: '100%', padding: '3rem 4rem'}}>
             <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                 <h1>{Product.title}</h1>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     {checkScrapped() ? 
                         <Button size="large" shape="round" type="danger" disabled>
                             스크랩 하기
@@ -107,7 +108,7 @@ function DetailReviewPage(props) {
                 </Col>
                 <Col lg={12} sm={24}>
                     {/* review Detail Info */}
-                    <ReviewInfo detail={Product} />
+                    <ReviewInfo detail={Product} postId={Product._id} />
                 </Col>
             </Row>
             <br />
