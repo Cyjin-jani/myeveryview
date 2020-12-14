@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import SingleComment from './SingleComment';
 
 function ReplyComment(props) {
@@ -26,7 +26,7 @@ function ReplyComment(props) {
                 {comment.responseTo === parentCommentId && (
                     <div style={{width: '80%', marginLeft: '40px'}}>
                         <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={props.postId} key={index} />
-                        <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={props.postId} commentsList={props.commentsList} />
+                        <ReplyComment key={index+1} refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={props.postId} commentsList={props.commentsList} />
                     </div>
                 )}
             </React.Fragment>
@@ -56,4 +56,4 @@ function ReplyComment(props) {
     )
 }
 
-export default ReplyComment
+export default memo(ReplyComment)

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
 
 function Comment(props) {
+    // console.log('Comment 컴포넌트');
     //redux에서 user정보 가져오기.
     const user = useSelector(state => state.user);
     const postId = props.postId;
-    
+    // console.log('user', user.userData);
 
     const [commentValue, setcommentValue] = useState("");
 
@@ -47,7 +48,7 @@ function Comment(props) {
                 (!comment.responseTo && 
                     <React.Fragment>
                     <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={postId} key={index} />
-                    <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={postId} commentsList={props.commentsList} />
+                    <ReplyComment key={index+1} refreshFunction={props.refreshFunction} parentCommentId={comment._id} postId={postId} commentsList={props.commentsList} />
                     </React.Fragment>
                 )
 
@@ -55,18 +56,20 @@ function Comment(props) {
 
             <br />
             {/* root comment form */}
-            <form style={{display: 'flex'}} onSubmit={onSubmit}>
-                <textarea 
-                    style={{width: '100%', borderRadius: '5px' }} 
-                    onChange={handleChange}
-                    value={commentValue}
-                    placeholder="코멘트를 작성해 주세요."
-                />
-                <br />
-                <button style={{width: '20%', height: '52px'}} onClick={onSubmit} >Submit</button>
-            </form>
+            { user.userData && user.userData.isAuth === true && 
+                <form style={{display: 'flex'}} onSubmit={onSubmit}>
+                    <textarea 
+                        style={{width: '100%', borderRadius: '5px' }} 
+                        onChange={handleChange}
+                        value={commentValue}
+                        placeholder="코멘트를 작성해 주세요."
+                    />
+                    <br />
+                    <button style={{width: '20%', height: '52px'}} onClick={onSubmit} >Submit</button>
+                </form>
+            }
         </div>
     )
 }
 
-export default Comment
+export default memo(Comment)

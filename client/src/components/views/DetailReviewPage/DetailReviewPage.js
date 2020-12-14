@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { addToScrap } from '../../../_actions/user_actions';
 
 function DetailReviewPage(props) {
-    
+    // console.log('DetailReviewPage 컴포넌트');
     const productReviewId = props.match.params.productId;
     const [Product, setProduct] = useState({});
     const [ReviewWriter, setReviewWriter] = useState("");

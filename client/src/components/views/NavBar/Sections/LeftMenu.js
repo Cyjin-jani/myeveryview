@@ -10,8 +10,10 @@ function LeftMenu(props) {
 
   return (
     <Menu mode={props.mode}>
-    <Menu.Item key="mail">
-      <a href="/">Home</a>
+    <Menu.Item key="home">
+      <a href="/">
+        메인
+      </a>
     </Menu.Item>
     <Menu.Item key="scrap" style={{paddingBottom: 3}}>
           <Badge count={user.userData && user.userData.scrap && user.userData.scrap.length }>

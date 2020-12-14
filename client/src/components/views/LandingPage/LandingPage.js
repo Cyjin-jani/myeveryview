@@ -157,7 +157,7 @@ function LandingPage() {
     return (
         <div style={{ width: '75%', margin: '1.5rem auto', height: '100%'}}>
             <div style={{ textAlign: 'center' }}>
-                <h2>마이 에브리뷰~ 🤦‍♂️</h2>
+                <h2>👍💬 My EveRyview 💬👍</h2>
             </div>
 
             {/* 검색 필터 넣을 곳 */}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { useSelector } from 'react-redux';
 import { Comment, Button, Input } from 'antd';
 import axios from 'axios';
@@ -13,7 +13,11 @@ function SingleComment(props) {
     const [CommentValue, setCommentValue] = useState("");
 
     const onClickReplyOpen = () => {
-        setOpenReply(!OpenReply)
+        if(user.userData && user.userData.isAuth === true) {
+            setOpenReply(!OpenReply)
+        }else {
+            alert('로그인이 필요합니다.')
+        }
     }
     const onHandleChange = (event) => {
         setCommentValue(event.currentTarget.value)
@@ -73,4 +77,4 @@ function SingleComment(props) {
     )
 }
 
-export default SingleComment
+export default memo(SingleComment)
