@@ -45,7 +45,8 @@ function LandingPage() {
                     } else {
                         setProducts(response.data.productsInfo.slice(0, 4))
                     }
-                    setPostSize(response.data.postSize)
+                    // console.log(response.data.postSize);
+                    setPostSize(response.data.postSize);
                 }else {
                     alert('상품들을 가져오는 데 실패함.')
                 }
@@ -71,11 +72,14 @@ function LandingPage() {
     const renderCards = Products.map((product, index) => {
         // console.log(product);
 
-        return <Col lg={6} md={8} xs={24} key={index} >
+        return <Col lg={6} md={8} xs={24} key={index} style={{height: '310px'}} >
             <a href={`/product/${product._id}`}>
             <Card
                 cover={<ImageSlider images={product.images} />}
-                bodyStyle={{paddingBottom: '5px'}}
+                bodyStyle={{paddingBottom: '5px', height: '130px', minHeight: '130px', maxHeight: '130px'}}
+                hoverable
+                style={{borderColor: '#83befc'}}
+
             >
                 <Meta
                     title={product.title}
@@ -183,7 +187,7 @@ function LandingPage() {
 
             </Row>
 
-            {PostSize > Limit && 
+            {PostSize >= Limit && 
                 <div style={{display: 'flex', justifyContent: 'center', margin: '20px'}}>
                     <Button onClick={loadMoreHandler}>더보기</Button>
                 </div>

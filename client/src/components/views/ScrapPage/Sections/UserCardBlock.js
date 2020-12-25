@@ -1,5 +1,6 @@
 import React from 'react';
-import "./UserCardBlock.css"
+import "./UserCardBlock.css";
+import {Button} from 'antd';
 
 function UserCardBlock(props) {
 
@@ -15,7 +16,7 @@ function UserCardBlock(props) {
             <tr key={index}>
                 <td>
                     <a href={`/product/${review._id}`}>
-                    <img style={{width: '70px'}} alt="review" src={renderImage(review.images)} />
+                    <img style={{width: '70px', height: '70px'}} alt="review" src={renderImage(review.images)} />
                     </a>
                 </td>
                 <td>
@@ -28,9 +29,9 @@ function UserCardBlock(props) {
                     {review.stars}
                 </td>
                 <td>
-                    <button onClick={()=>props.removeItem(review._id)}>
-                        Remove
-                    </button>
+                    <Button onClick={()=>props.removeItem(review._id)}>
+                        스크랩에서 제거
+                    </Button>
                 </td>
             </tr>
         ))
@@ -42,11 +43,11 @@ function UserCardBlock(props) {
             <table>
                 <thead>
                     <tr>
-                        <th>Review Image</th>
-                        <th>Review Title</th>
-                        <th>Review Price</th>
-                        <th>Review Stars</th>
-                        <th>Remove from Scrap</th>
+                        <th>리뷰 이미지</th>
+                        <th>리뷰 제목</th>
+                        <th>제품 가격</th>
+                        <th>별점</th>
+                        <th>스크랩에서 제거</th>
                     </tr>
                 </thead>
                 <tbody>

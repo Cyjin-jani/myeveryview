@@ -5,7 +5,7 @@
   border-bottom: solid 1px #e8e8e8;
   overflow: auto;
   box-shadow: 0 0 30px #f3f1f1;
-  background-color: white;
+  background-color: #044991;
 }
 
 .menu__logo {
@@ -17,10 +17,12 @@
   display: inline-block;
   font-size: 20px;
   padding: 19px 20px;
+  color: white;
 }
 
 .menu__container .ant-menu-item {
   padding: 0px 5px;
+  background-color: #044991;
 }
 
 .menu__container .ant-menu-submenu-title {
@@ -30,10 +32,12 @@
 .menu__container .ant-menu-item a,
 .menu__container .ant-menu-submenu-title a {
   padding: 10px 15px;
+  color: white;
 }
 
 .menu__container .ant-menu-horizontal {
   border-bottom: none;
+  background-color: #044991;
 }
 
 .menu__container .menu_left {
