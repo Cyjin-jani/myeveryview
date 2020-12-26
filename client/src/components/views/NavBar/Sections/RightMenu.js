@@ -40,7 +40,7 @@ function RightMenu(props) {
           </Badge>
         </Menu.Item> */}
         <Menu.Item key="upload">
-          <a href="/product/upload">업로드</a>
+          <a href="/product/upload">리뷰하기</a>
         </Menu.Item>
         <Menu.Item key="userInfo">
           <a href="/userInfo">내정보</a>

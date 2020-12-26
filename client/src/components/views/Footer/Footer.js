@@ -8,7 +8,7 @@ function Footer() {
             flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', fontSize:'1rem'
         }}>
-           <p> 코딩해야지?  <Icon type="smile" /></p>
+           <p> 마이에브리뷰 2020  <Icon type="smile" /></p>
         </div>
     )
 }

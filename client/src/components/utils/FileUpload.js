@@ -60,17 +60,17 @@ function FileUpload(props) {
             {({getRootProps, getInputProps}) => (
                 <section>
                 <label>이미지 업로드</label>
-                <div style={{width: 300, height: 240, border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center'}} {...getRootProps()}>
+                <div style={{width: 300, height: 240, border: '1px solid #9cd0f7', display: 'flex', alignItems: 'center', justifyContent: 'center'}} {...getRootProps()}>
                     <input {...getInputProps()} />
                     {/* antd의 플러스 아이콘 사용 */}
-                    <Icon type="plus" style={{fontSize: '3rem'}} />
+                    <Icon type="plus" style={{fontSize: '3rem', color: '#1981cf'}} />
                 </div>
                 </section>
             )}
             </Dropzone>
             <section>
             <label style={{display: 'inline'}}>이미지 미리보기</label>
-            <div style={{display: 'flex', width: '320px', height: '240px', border: '1px solid lightgray', overflowX: 'scroll'}}>
+            <div style={{display: 'flex', width: '320px', height: '240px', border: '1px solid #9cd0f7', overflowX: 'scroll'}}>
                 {Images && Images.map((image, index) => (
                     <div onClick={() => deleteHandler(image)} key={index}>
                         <img style={{minWidth: '300px', width: '300px', height: '240px'}}

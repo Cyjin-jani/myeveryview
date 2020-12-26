@@ -1,6 +1,8 @@
 import React from 'react';
 import "./UserCardBlock.css";
 import {Button} from 'antd';
+import StarRatings from 'react-star-ratings';
+
 
 function UserCardBlock(props) {
 
@@ -26,10 +28,18 @@ function UserCardBlock(props) {
                     {review.price}
                 </td>
                 <td>
-                    {review.stars}
+                    <StarRatings
+                        rating={review.stars}
+                        starRatedColor="#fcdb03"
+                        numberOfStars={5}
+                        name='rating'
+                        starDimension="15px"
+                        starSpacing="1px"
+                        />
+                    
                 </td>
                 <td>
-                    <Button onClick={()=>props.removeItem(review._id)}>
+                    <Button type="primary" onClick={()=>props.removeItem(review._id)} style={{backgroundColor: '#f03756', borderColor: '#f03756'}}>
                         스크랩에서 제거
                     </Button>
                 </td>

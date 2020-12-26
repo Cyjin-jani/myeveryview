@@ -39,7 +39,7 @@ function ScrapPage(props) {
     
     return (
         <div style={{width: '85%', margin: '3rem auto'}}>
-            <h1>마이 스크랩 리뷰</h1>
+            <h1>리뷰 스크랩북</h1>
             <div>
                 <UserCardBlock reviews={props.user.scrapDetail} removeItem={removeFromScrap} />
             </div>

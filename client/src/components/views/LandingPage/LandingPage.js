@@ -160,9 +160,12 @@ function LandingPage() {
 
     return (
         <div style={{ width: '75%', margin: '1.5rem auto', height: '100%'}}>
-            <div style={{ textAlign: 'center' }}>
-                <h2>👍💬 My EveRyview 💬👍</h2>
+            <div style={{ textAlign: 'center', height: '5rem' }}>
+                <h2>👍💬 마이에브리뷰 💬👍</h2>
+                <h4>원하는 리뷰를 찾아보고, 자신만의 리뷰를 등록해보세요!</h4>
             </div>
+            {/* <div style={{ textAlign: 'center', height: '3rem'}}>
+            </div> */}
 
             {/* 검색 필터 넣을 곳 */}
             
@@ -189,10 +192,10 @@ function LandingPage() {
 
             {PostSize >= Limit && 
                 <div style={{display: 'flex', justifyContent: 'center', margin: '20px'}}>
-                    <Button onClick={loadMoreHandler}>더보기</Button>
+                    <Button type="primary" onClick={loadMoreHandler}>더보기</Button>
                 </div>
             }
-
+            <br></br>
 
         </div>
     )
