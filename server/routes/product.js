@@ -76,7 +76,7 @@ router.post('/allProducts', (req, res) => {
     }
 
   }
-  console.log('findArgs: ', findArgs);
+  // console.log('findArgs: ', findArgs);
   // 어떤 카테고리만 가져올 지를 find에다가 findArgs로 넣어줌.
   // console.log('findArgs', findArgs);
 
@@ -90,9 +90,9 @@ router.post('/allProducts', (req, res) => {
       .limit(limit)
       .exec((err, productsInfo) => {
         if (err) return res.status(400).json({success: false, err})
-        console.log('db값');
+        // console.log('db값');
         for(let i in productsInfo){
-          console.log("리뷰들", productsInfo[i].title);
+          // console.log("리뷰들", productsInfo[i].title);
         }
         return res.status(200).json({success: true, productsInfo, postSize: productsInfo.length})
       })
@@ -104,9 +104,9 @@ router.post('/allProducts', (req, res) => {
       .limit(limit)
       .exec((err, productsInfo) => {
         if (err) return res.status(400).json({success: false, err})
-        console.log('db값');
+        // console.log('db값');
         for(let i in productsInfo){
-          console.log("리뷰들", productsInfo[i].title);
+          // console.log("리뷰들", productsInfo[i].title);
         }
         return res.status(200).json({success: true, productsInfo, postSize: productsInfo.length})
       })

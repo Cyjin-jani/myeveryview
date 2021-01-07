@@ -24,7 +24,7 @@ router.get("/auth", auth, (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    console.log('유저 register 시작(DB).');
+    // console.log('유저 register 시작(DB).');
     const user = new User(req.body);
 
     user.save((err, doc) => {
@@ -88,7 +88,7 @@ router.post("/checkEmail", (req, res) => {
 });
 
 router.post("/update", (req, res) => {
-    console.log('유저 업뎃 요청받음');
+    // console.log('유저 업뎃 요청받음');
     const user = new User(req.body);
     // console.log(req.body);
     //이름은 update하고, password는 암호화 해야해서 save로 해봄.
@@ -104,7 +104,7 @@ router.post("/update", (req, res) => {
 
 
 router.post("/addToScrap", auth, (req, res) => {
-    console.log('scrap기능');
+    // console.log('scrap기능');
     //해당 유저의 정보를 가져오기.
     
     User.findOne({ _id: req.user._id }, (err, userInfo) => {
@@ -120,7 +120,7 @@ router.post("/addToScrap", auth, (req, res) => {
 
         //상품리뷰가 이미 스크랩 되어 있는 경우
         if(alreadyScrapped) {
-            console.log('상품이 이미 스크랩 되어있다.');
+            // console.log('상품이 이미 스크랩 되어있다.');
             return res.status(200).send(alreadyScrapped);
 
         } else {
