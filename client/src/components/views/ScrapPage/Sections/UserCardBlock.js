@@ -9,7 +9,7 @@ function UserCardBlock(props) {
     const renderImage = (images) => {
         if(images.length > 0) {
             let image = images[0]
-            return `http://3.35.24.201:5000/${image}`
+            return `http://52.78.229.61:5000/${image}`
         }
     }
 

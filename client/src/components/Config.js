@@ -1,2 +1,2 @@
 //SERVER ROUTES
-export const USER_SERVER = 'http://3.35.24.201/api/users';
+export const USER_SERVER = 'http://52.78.229.61/api/users';

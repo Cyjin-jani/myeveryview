@@ -13,8 +13,8 @@ function ProductImage(props) {
 
             props.detail.images.map(item => {
                 images.push({
-                    original: `http://3.35.24.201:5000/${item}`,
-                    thumbnail: `http://3.35.24.201:5000/${item}`,
+                    original: `http://52.78.229.61:5000/${item}`,
+                    thumbnail: `http://52.78.229.61:5000/${item}`,
                 })
             })
             setImages(images)
