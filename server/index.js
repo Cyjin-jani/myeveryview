@@ -25,12 +25,12 @@ const connect = mongoose.connect(config.mongoURI,
 
 app.use(cors())
 
-//to not get any deprecation warning or error
-//support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 //to get json data
 // support parsing of application/json type post data
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb'}));
+//to not get any deprecation warning or error
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
 //라우팅을 활용하여 요청처리 하는 부분을 나누어 준다.
