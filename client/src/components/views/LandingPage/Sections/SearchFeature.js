@@ -15,10 +15,12 @@ function SearchFeature(props) {
     return (
         <div>
             <Search 
-                placeholder="input search text" 
+                placeholder="원하는 리뷰 검색하기" 
                 onChange={searchHandler} 
-                style={{ width: 200 }}
+                style={{ minWidth: '250px' }}
                 value={SearchTerm}
+                size="large"
+                enterButton
             />
         </div>
     )

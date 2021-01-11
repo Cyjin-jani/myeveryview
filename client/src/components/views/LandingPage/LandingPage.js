@@ -167,8 +167,12 @@ function LandingPage() {
             {/* <div style={{ textAlign: 'center', height: '3rem'}}>
             </div> */}
 
+            {/* 검색 */}
+            <div style={{display: 'flex', justifyContent: 'center', margin: '1rem auto', width: '70%'}}>
+            <SearchFeature refreshFunction={updateSearchTerm} />
+            </div>
+
             {/* 검색 필터 넣을 곳 */}
-            
             <Row gutter={[16, 16]} type="flex" justify="start">
                 <Col lg={12} xs={24}>
                     {/* 카테고리 체크박스 */}
@@ -180,10 +184,6 @@ function LandingPage() {
                 </Col>
             </Row>
 
-            {/* 검색 */}
-            <div style={{display: 'flex', justifyContent: 'flex-end', margin: '1rem auto'}}>
-            <SearchFeature refreshFunction={updateSearchTerm} />
-            </div>
             {/* cards */}
             <Row gutter={[16, 16]} type="flex" justify="start">
                 {renderCards}
